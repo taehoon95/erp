@@ -32,8 +32,8 @@ dependencies {
 
 jar { // 스윙으로 만든 어플리케이션인 경우에만
 	version = 1.0
-	mainClassName= 'erp.Erp'
-	baseName= 'Erp' //  baseName
+	mainClassName= 'erp.Main'
+	baseName= 'Main' //  baseName
 	appendix = 'bin'
 	
 	manifest{

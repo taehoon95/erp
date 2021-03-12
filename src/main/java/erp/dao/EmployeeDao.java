@@ -1,0 +1,20 @@
+package erp.dao;
+
+import java.util.List;
+
+import erp.dto.Department;
+import erp.dto.Employee;
+import erp.dto.Title;
+
+public interface EmployeeDao {
+	List<Employee> selectEmpByAll();
+	List<Employee> selectEmpByAllJoin();
+	
+	List<Employee> selectEmpByDeptNo(Department dept);
+	Employee selectEmpByNo(Employee employee);
+	int insertEmployee(Employee employee);
+	int updateEmployee(Employee employee);
+	int deleteEmployee(int empNo);
+	
+	List<Employee> selectEmployeeByTitle(Title title);
+}
