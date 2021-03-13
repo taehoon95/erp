@@ -44,7 +44,7 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		table.setComponentPopupMenu(popMenu);
 	}
 	
-	public abstract void initList();
+	public abstract void initList(); // 테이블 전체(all) 검색
 
 	private void initialize() {
 		setLayout(new BorderLayout(0, 0));

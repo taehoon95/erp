@@ -1,4 +1,4 @@
-package erp.daoImpl;
+package erp.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import erp.dao.DepartmentDao;
 import erp.database.JdbcConn;
 import erp.dto.Department;
+import erp.ui.exception.SqlConstraintException;
 
 public class DepartmentDaoImpl implements DepartmentDao {
 
@@ -76,10 +79,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			pstmt.setInt(3, dept.getFloor());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SqlConstraintException();
 		}
-		return 0;
 	}
 
 	@Override
@@ -92,7 +93,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			pstmt.setInt(3,dept.getDeptNo());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -106,10 +106,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
 			pstmt.setInt(1,deptNo);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SqlConstraintException();
 		}
-		return 0;
 	}
 
 }

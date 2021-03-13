@@ -1,12 +1,11 @@
 package erp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import erp.dao.EmployeeDao;
 import erp.dao.TitleDao;
-import erp.daoImpl.EmployeeDaoImpl;
-import erp.daoImpl.TitleDaoimpl;
+import erp.dao.Impl.EmployeeDaoImpl;
+import erp.dao.Impl.TitleDaoimpl;
 import erp.dto.Employee;
 import erp.dto.Title;
 

@@ -1,4 +1,4 @@
-package erp.daoImpl;
+package erp.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

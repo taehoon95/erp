@@ -9,7 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import erp.daoImpl.EmployeeDaoImpl;
+import erp.dao.Impl.EmployeeDaoImpl;
 import erp.dto.Department;
 import erp.dto.Employee;
 import erp.dto.Title;

@@ -9,7 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import erp.daoImpl.DepartmentDaoImpl;
+import erp.dao.Impl.DepartmentDaoImpl;
 import erp.dto.Department;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

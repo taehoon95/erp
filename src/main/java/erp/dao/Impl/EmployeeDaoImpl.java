@@ -1,4 +1,4 @@
-package erp.daoImpl;
+package erp.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +12,6 @@ import erp.database.JdbcConn;
 import erp.dto.Department;
 import erp.dto.Employee;
 import erp.dto.Title;
-import erp.ui.exception.NullPointException;
 import erp.ui.exception.SqlConstraintException;
 
 public class EmployeeDaoImpl implements EmployeeDao {
@@ -182,14 +181,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> selectEmpByDeptNo(Department dept) {
-		String sql = "select empno,empname,title as title_no ,manager as manager_no ,salary,dept as deptno from employee where dept = (select deptNo from department where deptNo = ?)";
+		String sql = "select empno,empname from employee e join department d on e.dept = d.deptno where deptno = ?";
 		try (Connection con = JdbcConn.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, dept.getDeptNo());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					ArrayList<Employee> list = new ArrayList<Employee>();
 					do {
-						list.add(getEmployee(rs));
+						list.add(getEmployee3(rs));
 					} while (rs.next());
 					return list;
 				}

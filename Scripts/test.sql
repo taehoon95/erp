@@ -7,3 +7,7 @@ select empname, empno
     on e.title  = t.tno
  where tno = 5; 
   
+select * from employee;
+select * from department;
+
+select empno,empname from employee e join department d on e.dept = d.deptno where deptno = 2;  
