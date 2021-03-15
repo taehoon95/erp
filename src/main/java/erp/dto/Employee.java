@@ -89,10 +89,47 @@ public class Employee {
 	
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s %s %s", empNo,
-				empName, title.getTno(), manager.getEmpNo() == 0 ? null : manager.getEmpNo(), salary, dept.getDeptNo());
+//		return String.format("%s %s %s %s %s %s", empNo,
+//				empName, title.getTno(), manager.getEmpNo() == 0 ? null : manager.getEmpNo(), salary, dept.getDeptNo());
+		return String.format("%s (%s)",empName,empNo);
 	}
 	
+	public String toString3() {
+		return String.format("%s %s %s %s %s %s %s %s"
+				,empNo
+				,empName
+				,title.getTname(),title.getTno()
+				,manager.getEmpName()
+				,manager.getEmpNo()
+				,salary
+				,dept.getDeptName()
+				,dept.getDeptNo());
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + empNo;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (empNo != other.empNo)
+			return false;
+		return true;
+	}
+
+
 	public String toString2() {
 		return String.format("%4s %4s %4s %s %4s %4s %4s %s %s",
 	         empNo,empName, title, manager.empName == null ? " " : manager.empName

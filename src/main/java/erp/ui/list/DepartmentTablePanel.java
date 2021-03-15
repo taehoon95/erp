@@ -6,6 +6,8 @@ import erp.dto.Department;
 import erp.service.DeptService;
 
 public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
+	public DepartmentTablePanel() {
+	}
 
 	private DeptService service = new DeptService();
 	

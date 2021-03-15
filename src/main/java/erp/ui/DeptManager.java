@@ -18,6 +18,7 @@ import erp.dto.Department;
 import erp.dto.Employee;
 import erp.service.DeptService;
 import erp.ui.content.DeptPanel;
+import erp.ui.content.InterfaceItem;
 import erp.ui.exception.InvaildCheckException;
 import erp.ui.exception.NotSelectedExeption;
 import erp.ui.exception.SqlConstraintException;
@@ -26,7 +27,7 @@ import erp.ui.list.DepartmentTablePanel;
 public class DeptManager extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private DeptPanel pContent;
+	private InterfaceItem<Department> pContent;
 	private JPanel pBtn;
 	private DepartmentTablePanel pList;
 	private JButton btnAdd;
@@ -47,7 +48,7 @@ public class DeptManager extends JFrame implements ActionListener {
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
 		pContent = new DeptPanel();
-		contentPane.add(pContent);
+		contentPane.add((DeptPanel) pContent);
 		
 		pBtn = new JPanel();
 		contentPane.add(pBtn);
@@ -101,8 +102,8 @@ public class DeptManager extends JFrame implements ActionListener {
 					btnAdd.setText("수정");
 					
 					Department modiDept = pList.getItem(); 
-					pContent.setDepartment(modiDept);
-					pContent.getTfDeptNo().setEditable(false);
+					pContent.setItem(modiDept);
+					((DeptPanel) pContent).getTfDeptNo().setEditable(false);
 				}
 				if(e.getActionCommand().equals("동일 부서 사원 보기")) {
 					Department selectEmpByDept = pList.getItem(); 
@@ -141,24 +142,24 @@ public class DeptManager extends JFrame implements ActionListener {
 		
 	}
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Department dept = pContent.getDepartment();
+		Department dept = pContent.getItem();
 		if(btnAdd.getText().equals("추가")) {
 			service.addDept(dept);
 			pList.loadData();
-			pContent.ClearTf();
+			pContent.clearTf();
 			JOptionPane.showMessageDialog(null, dept + "추가되었습니다.");
 		}
 		if(btnAdd.getText().equals("수정")) {
 			JOptionPane.showMessageDialog(null, "수정해주세요");
 			service.modiDept(dept);
 			pList.loadData();
-			pContent.ClearTf();
+			pContent.clearTf();
 			JOptionPane.showMessageDialog(null, dept +" 로 수정되었습니다");
 			btnAdd.setText("추가");
-			pContent.getTfDeptNo().setEditable(true);
+			((DeptPanel) pContent).getTfDeptNo().setEditable(true);
 		}
 	}
 	protected void actionPerformedBtnCancel(ActionEvent e) {
-		pContent.ClearTf();
+		pContent.clearTf();
 	}
 }

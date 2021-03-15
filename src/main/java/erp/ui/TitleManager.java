@@ -23,6 +23,7 @@ import erp.ui.exception.NotSelectedExeption;
 import erp.ui.exception.SqlConstraintException;
 import erp.ui.list.TitleTablePanel;
 
+@SuppressWarnings("serial")
 public class TitleManager extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -30,12 +31,12 @@ public class TitleManager extends JFrame implements ActionListener {
 	private TitlePanel pContent;
 	private TitleTablePanel pList;
 	private TitleService service;
-
+	
 	public TitleManager() {
 		service = new TitleService();
 		initialize();
 	}
-
+	
 	private void initialize() {
 		setTitle("직책 관리");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,25 +45,26 @@ public class TitleManager extends JFrame implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
+		
 		pContent = new TitlePanel();
 		contentPane.add(pContent);
-
-		pBtn = new JPanel();
-		contentPane.add(pBtn);
-
+		
+		JPanel pBtns = new JPanel();
+		contentPane.add(pBtns);
+		
 		btnAdd = new JButton("추가");
 		btnAdd.addActionListener(this);
-		pBtn.add(btnAdd);
-
-		JButton btnClear = new JButton("취소");
-		pBtn.add(btnClear);
-
+		pBtns.add(btnAdd);
+		
+		btnClear = new JButton("취소");
+		btnClear.addActionListener(this);
+		pBtns.add(btnClear);
+		
 		pList = new TitleTablePanel();
 		pList.setService(service);
 		pList.loadData();
 		contentPane.add(pList);
-
+		
 		JPopupMenu popupMenu = createPopupMenu();
 		pList.setPopupMenu(popupMenu);
 	}
@@ -77,94 +79,112 @@ public class TitleManager extends JFrame implements ActionListener {
 		JMenuItem deleteItem = new JMenuItem("삭제");
 		deleteItem.addActionListener(popupMenuListner);
 		popMenu.add(deleteItem);
-
+		
 		JMenuItem empListByTitleItem = new JMenuItem("동일 직책 사원 보기");
 		empListByTitleItem.addActionListener(popupMenuListner);
 		popMenu.add(empListByTitleItem);
-
+		
 		return popMenu;
 	}
-
+	
 	ActionListener popupMenuListner = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
 				if (e.getActionCommand().equals("삭제")) {
 					Title delTitle = pList.getItem();
 					service.removeTitle(delTitle);
-					JOptionPane.showMessageDialog(null, delTitle + "삭제되었습니다.");
 					pList.loadData();
+					JOptionPane.showMessageDialog(null, delTitle + "삭제 되었습니다.");
 				}
+				
 				if (e.getActionCommand().equals("수정")) {
+					Title updateTitle = pList.getItem();
+					pContent.setItem(updateTitle);
 					btnAdd.setText("수정");
-					Title upTitle = pList.getItem();
-					pContent.setTitle(upTitle);
-					service.modifyTitle(upTitle);
-					JOptionPane.showMessageDialog(null, upTitle + "수정하세요.");
 					pContent.getTfTitleNo().setEditable(false);
-					pList.loadData();
 				}
-				if (e.getActionCommand().equals("동일 직책 사원 보기")) {
+				
+				if (e.getActionCommand().contentEquals("동일 직책 사원 보기")) {
 					/*
 					 * 1. EmployeeDao -> selectEmployeeByTitle() 추가
-					 * 2. EmployeeDaoImpl -> selectEmployeeByTitle() 구현 
-					 * 3. EmployeeDaoTest -> Test하기 
+					 * 2. EmployeeDaoImpl -> selectEmployeeByTitle() 구현
+					 * 3. EmployeeDaoTest -> Test하기
 					 * 4. TitleService -> EmployeeDaoImpl field 추가 및 메서드 추가
-					 * 5. 아래 기능 추가 
+					 * 5. 아래 기능 추가
 					 * 6. 예외찾아서 추가하기 (신규 직책 추가 시 NullPointException)
-					 * 
 					 */
-					Title searchTitle = pList.getItem();
-					List<Employee> empList = service.empSelectByTitle(searchTitle);
-					if (empList == null) {
-						JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 직책 사원", JOptionPane.WARNING_MESSAGE);
+					Title title = pList.getItem();
+					List<Employee> list = service.empSelectByTitle(title);
+					
+					if (list == null) {
+						JOptionPane.showMessageDialog(null, "해당 사원이 없음", "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
-					List<String> strList = empList.parallelStream().map(s -> {
-						return String.format("%s(%d)", s.getEmpName(), s.getEmpNo());
-					}).collect(Collectors.toList());
+					
+					List<String> strList = list
+							.parallelStream()
+							.map( s->{ return String.format("%s(%d)", s.getEmpName(), s.getEmpNo()); })
+							.collect(Collectors.toList());
+					
 					JOptionPane.showMessageDialog(null, strList, "동일 직책 사원", JOptionPane.INFORMATION_MESSAGE);
 				}
-			} catch (NotSelectedExeption | SqlConstraintException e2) {
+				
+			}catch (NotSelectedExeption | SqlConstraintException e2) {
 				JOptionPane.showMessageDialog(null, e2.getMessage());
-			} catch (Exception e2) {
+			}catch (Exception e2) {
 				e2.printStackTrace();
 			}
-
 		}
 	};
-	private JPanel pBtn;
-
+	private JButton btnClear;
+	
 	public void actionPerformed(ActionEvent e) {
+		
 		try {
-			if (e.getSource() == btnAdd) {
-				actionPerformedBtnAdd(e);
+			if (e.getSource() == btnClear) {
+				actionPerformedBtnClear(e);
 			}
-		} catch (InvaildCheckException | SqlConstraintException e1) {
+			if (e.getSource() == btnAdd) {
+				if (e.getActionCommand().contentEquals("추가")) {
+					actionPerformedBtnAdd(e);
+				}else {
+					actionPerformedBtnUpdate(e);
+				}
+			}
+		}catch (InvaildCheckException | SqlConstraintException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (Exception e1) {
+//			pContent.clearTf();
+		}catch (Exception e1) {
 			e1.printStackTrace();
 		}
-
+	}
+	
+	private void actionPerformedBtnUpdate(ActionEvent e) {
+		//pContent에서 수정된 title 가져오기
+		//update 수행
+		//pList 갱신
+		//pContent clearTf()호출하여 초기화
+		//btnAdd 텍스트 변경 수정->추가
+		
+		Title updateTitle = pContent.getItem();
+		service.modifyTitle(updateTitle);
+		pList.loadData();
+		pContent.clearTf();
+		btnAdd.setText("추가");
+		JOptionPane.showMessageDialog(null, updateTitle.getTname() + "정보가 수정되었습니다.");
+		pContent.getTfTitleNo().setEditable(true);
 	}
 
 	protected void actionPerformedBtnAdd(ActionEvent e) {
-		Title title = pContent.getTitle();
-		if (btnAdd.getText().equals("추가")) {
-			service.addTitle(title);
-			pList.loadData();
-			pContent.clearTf();
-			JOptionPane.showMessageDialog(null, title + "추가했습니다.");
-		}
-		if (btnAdd.getText().equals("수정")) {
-			service.modifyTitle(title);
-			pList.loadData();
-			pContent.clearTf();
-			JOptionPane.showMessageDialog(null, title + "수정했습니다.");
-			btnAdd.setText("추가");
-			pContent.getTfTitleNo().setEditable(true);
-		}
-
+		Title title = pContent.getItem();
+		service.addTitle(title);
+		pList.loadData();
+		pContent.clearTf();
+		JOptionPane.showMessageDialog(null, title + " 추가했습니다.");
+	}
+	protected void actionPerformedBtnClear(ActionEvent e) {
+		pContent.getTfTitleNo().setEditable(true);
+		pContent.clearTf();
 	}
 }

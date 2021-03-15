@@ -11,7 +11,7 @@ import javax.swing.border.TitledBorder;
 import erp.dto.Department;
 import erp.ui.exception.InvaildCheckException;
 
-public class DeptPanel extends JPanel {
+public class DeptPanel extends InterfaceItem<Department>{
 	private JTextField tfDeptNo;
 	private JTextField tfDeptName;
 	private JTextField tfFloor;
@@ -44,39 +44,8 @@ public class DeptPanel extends JPanel {
 		initialize();
 	}
 
-	private void vaildCheck() {
-		if(tfDeptNo.getText().contentEquals("") ||
-				tfDeptName.getText().contentEquals("") ||
-				tfFloor.getText().contentEquals("")) {
-			throw new InvaildCheckException();
-		}
-	}
-	
-	public Department getDepartment() {
-		vaildCheck();
-		int deptNo = Integer.parseInt(tfDeptNo.getText().trim());
-		String deptName = (tfDeptName.getText().trim());
-		int floor = Integer.parseInt(tfFloor.getText().trim());
-		return new Department(deptNo, deptName, floor);
-	}
-
-	
-
-	public void setDepartment(Department dept) {
-//		tfDeptNo.setText(String.valueof(dept.getDeptNo())));
-		tfDeptNo.setText(dept.getDeptNo() + "");
-		tfDeptName.setText(dept.getDeptName());
-		tfFloor.setText(dept.getFloor() + "");
-	}
-
-	public void ClearTf() {
-//		tfDeptNo.setText(String.valueof(dept.getDeptNo())));
-		tfDeptNo.setText("");
-		tfDeptName.setText("");
-		tfFloor.setText("");
-	}
-
-	private void initialize() {
+	@Override
+	public void initialize() {
 		setBorder(new TitledBorder(null, "부서 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 10));
 
@@ -103,6 +72,39 @@ public class DeptPanel extends JPanel {
 		tfFloor = new JTextField();
 		tfFloor.setColumns(10);
 		add(tfFloor);
+	}
+
+	@Override
+	public void setItem(Department item) {
+		tfDeptNo.setText(item.getDeptNo() + "");
+		tfDeptName.setText(item.getDeptName());
+		tfFloor.setText(item.getFloor() + "");		
+	}
+
+	@Override
+	public Department getItem() {
+		validCheck();
+		int deptNo = Integer.parseInt(tfDeptNo.getText().trim());
+		String deptName = (tfDeptName.getText().trim());
+		int floor = Integer.parseInt(tfFloor.getText().trim());
+		return new Department(deptNo, deptName, floor);
+	}
+
+	@Override
+	public void validCheck() {
+		if(tfDeptNo.getText().contentEquals("") ||
+				tfDeptName.getText().contentEquals("") ||
+				tfFloor.getText().contentEquals("")) {
+			throw new InvaildCheckException();
+		}
+		
+	}
+
+	@Override
+	public void clearTf() {
+		tfDeptNo.setText("");
+		tfDeptName.setText("");
+		tfFloor.setText("");
 	}
 
 }

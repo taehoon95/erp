@@ -8,6 +8,8 @@ import erp.service.TitleService;
 
 @SuppressWarnings("serial")
 public class TitleTablePanel extends AbstractCustomTablePanel<Title> {
+	public TitleTablePanel() {
+	}
 	
 	private TitleService service;
 
@@ -24,8 +26,7 @@ public class TitleTablePanel extends AbstractCustomTablePanel<Title> {
 
 	@Override
 	public Object[] toArray(Title t) {
-		Object[] T = {t.getTno(),t.getTname()};
-		return T;
+		return new Object[] {t.getTno(),t.getTname()};
 	}
 
 	@Override

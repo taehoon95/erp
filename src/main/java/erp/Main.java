@@ -1,25 +1,26 @@
 package erp;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import erp.dto.Title;
 import erp.ui.DeptManager;
+import erp.ui.EmployeeManager;
 import erp.ui.TitleManager;
-
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Main extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnTitle;
 	private JButton btnDepartment;
+	private JButton btnEmployee;
 
 
 	public static void main(String[] args) {
@@ -56,11 +57,15 @@ public class Main extends JFrame implements ActionListener {
 		btnDepartment.addActionListener(this);
 		contentPane.add(btnDepartment);
 		
-		JButton btnEmployee = new JButton("사원 관리");
+		btnEmployee = new JButton("사원 관리");
+		btnEmployee.addActionListener(this);
 		contentPane.add(btnEmployee);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnEmployee) {
+			actionPerformedBtnEmployee(e);
+		}
 		if (e.getSource() == btnDepartment) {
 			actionPerformedBtnDepartment(e);
 		}
@@ -74,6 +79,10 @@ public class Main extends JFrame implements ActionListener {
 	}
 	protected void actionPerformedBtnDepartment(ActionEvent e) {
 		DeptManager frame = new DeptManager();
+		frame.setVisible(true);
+	}
+	protected void actionPerformedBtnEmployee(ActionEvent e) {
+		EmployeeManager frame = new EmployeeManager();
 		frame.setVisible(true);
 	}
 }

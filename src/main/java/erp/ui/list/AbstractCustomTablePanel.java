@@ -15,7 +15,6 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import erp.dto.Title;
 import erp.ui.exception.NotSelectedExeption;
 
 @SuppressWarnings("serial")
@@ -32,7 +31,7 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		setList();
 	}
 
-	public T getItem() { // list행의 인덱스번호 받아온다.
+	public T getItem() { 
 		int idx = table.getSelectedRow();
 		if(idx == -1) {
 			throw new NotSelectedExeption();
@@ -64,7 +63,7 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 	}
 
 	public Object[][] getData() {
-		return new Object[][] { { null, null, null }, };
+		return new Object[][] { { null, null, null } };
 	}
 
 	public void setList() {
