@@ -18,3 +18,10 @@ select * from employee where empno = 1003;
 -- 단방향 함수(Hash:MD5)
 select password('aaa123;l123/.,.,'), length(password('aaa123;l123/.,.,')) from dual;
 
+-- emp_detail insert 
+INSERT INTO erp.emp_detail (empno, pass, pic, gender, hiredate) VALUES(?, ?, ?, ?, ?);
+
+select empno,pic,gender,hiredate,pass from emp_detail where empno = 1003;
+
+delete from emp_detail where empno = 1003;
+
