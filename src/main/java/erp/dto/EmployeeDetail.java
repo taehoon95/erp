@@ -3,20 +3,21 @@ package erp.dto;
 import java.util.Arrays;
 import java.util.Date;
 
-public class EmpDetail {
+public class EmployeeDetail {
 	private int empNO;
 	private boolean gender;
 	private Date hireDate;
 	private byte[] pic;
+	private String pass;
 
-	public EmpDetail() {
+	public EmployeeDetail() {
 	}
 
-	public EmpDetail(int empNO) {
+	public EmployeeDetail(int empNO) {
 		this.empNO = empNO;
 	}
 
-	public EmpDetail(int empNO, boolean gender, Date hireDate, byte[] pic) {
+	public EmployeeDetail(int empNO, boolean gender, Date hireDate, byte[] pic) {
 		this.empNO = empNO;
 		this.gender = gender;
 		this.hireDate = hireDate;
@@ -53,6 +54,14 @@ public class EmpDetail {
 
 	public void setPic(byte[] pic) {
 		this.pic = pic;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	@Override

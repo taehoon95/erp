@@ -8,11 +8,11 @@ import erp.service.TitleService;
 
 @SuppressWarnings("serial")
 public class TitleTablePanel extends AbstractCustomTablePanel<Title> {
+	private TitleService service;
+	
 	public TitleTablePanel() {
 	}
 	
-	private TitleService service;
-
 	@Override
 	protected void setAlignAndWidth() {
 		

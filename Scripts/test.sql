@@ -13,3 +13,8 @@ select * from department;
 select empno,empname from employee e join department d on e.dept = d.deptno where deptno = 2;  
 
 select * from employee where empno = 1003;
+
+-- pass 길이 확인
+-- 단방향 함수(Hash:MD5)
+select password('aaa123;l123/.,.,'), length(password('aaa123;l123/.,.,')) from dual;
+

@@ -35,7 +35,7 @@ ALTER TABLE erp.Department
 
 -- 사원
 CREATE TABLE erp.Employee (
-	empno   INT         NOT NULL COMMENT '사워번호', -- 사워번호
+	empno   INT         NOT NULL COMMENT '사원번호', -- 사원번호
 	empname VARCHAR(20) NOT NULL COMMENT '사원명', -- 사원명
 	title   INT         NULL     COMMENT '직책', -- 직책
 	manager INT         NULL     COMMENT '직속상사', -- 직속상사
@@ -48,17 +48,25 @@ COMMENT '사원';
 ALTER TABLE erp.Employee
 	ADD CONSTRAINT PK_Employee -- 사원 기본키
 		PRIMARY KEY (
-			empno -- 사워번호
+			empno -- 사원번호
 		);
 
 -- 세부정보
 CREATE TABLE erp.emp_detail (
-	empno    INT        NULL COMMENT '사워번호', -- 사워번호
-	prc      LONGBLOB   NULL COMMENT '증명사진', -- 증명사진
-	jender   TINYINT(1) NULL COMMENT '성별', -- 성별
-	hiredate DATE       NULL COMMENT '입사일' -- 입사일
+	empno    INT        NOT NULL COMMENT '사원번호', -- 사원번호
+	pass     CHAR(41)   NULL     COMMENT '비밀번호', -- 비밀번호
+	pic      LONGBLOB   NULL     COMMENT '증명사진', -- 증명사진
+	gender   TINYINT(1) NULL     COMMENT '성별', -- 성별
+	hiredate DATE       NULL     COMMENT '입사일' -- 입사일
 )
 COMMENT '세부정보';
+
+-- 세부정보
+ALTER TABLE erp.emp_detail
+	ADD CONSTRAINT PK_emp_detail -- 세부정보 기본키
+		PRIMARY KEY (
+			empno -- 사원번호
+		);
 
 -- 사원
 ALTER TABLE erp.Employee
@@ -87,15 +95,15 @@ ALTER TABLE erp.Employee
 			manager -- 직속상사
 		)
 		REFERENCES erp.Employee ( -- 사원
-			empno -- 사워번호
+			empno -- 사원번호
 		);
 
 -- 세부정보
 ALTER TABLE erp.emp_detail
 	ADD CONSTRAINT FK_Employee_TO_emp_detail -- 사원 -> 세부정보
 		FOREIGN KEY (
-			empno -- 사워번호
+			empno -- 사원번호
 		)
 		REFERENCES erp.Employee ( -- 사원
-			empno -- 사워번호
+			empno -- 사원번호
 		);
