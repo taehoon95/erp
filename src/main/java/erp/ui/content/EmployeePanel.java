@@ -26,7 +26,7 @@ import erp.service.EmpService;
 import erp.ui.exception.InvaildCheckException;
 
 
-public class EmployeePanel extends InterfaceItem<Employee> implements ItemListener {
+public class EmployeePanel extends AbstractContentPanel<Employee> implements ItemListener {
 	private JTextField tfNo;
 	private JTextField tfName;
 	private JComboBox<Title> cmbTitle;
@@ -40,8 +40,8 @@ public class EmployeePanel extends InterfaceItem<Employee> implements ItemListen
 		initialize();
 	}
 	
-	@Override
-	public void initialize() {
+
+	private void initialize() {
 		setBorder(new TitledBorder(null, "사원정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new BorderLayout(0, 0));
 		

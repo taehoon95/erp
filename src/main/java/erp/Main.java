@@ -10,10 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import erp.dto.Title;
-import erp.ui.DeptManager;
-import erp.ui.EmployeeManager;
-import erp.ui.TitleManager;
+import erp.ui.DepartmentManagerUI;
+import erp.ui.DeptManager구버전;
+import erp.ui.EmployeeManager구버전;
+import erp.ui.EmployeeManagerUI;
+import erp.ui.TitleManagerUI;
 
 public class Main extends JFrame implements ActionListener {
 
@@ -74,15 +75,18 @@ public class Main extends JFrame implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnTitle(ActionEvent e) {
-		TitleManager frame = new TitleManager();
+		TitleManagerUI frame = new TitleManagerUI();
+		frame.setTitle("직책 관리");
 		frame.setVisible(true);
 	}
 	protected void actionPerformedBtnDepartment(ActionEvent e) {
-		DeptManager frame = new DeptManager();
+		DepartmentManagerUI frame = new DepartmentManagerUI();
+		frame.setTitle("부서 관리");
 		frame.setVisible(true);
 	}
 	protected void actionPerformedBtnEmployee(ActionEvent e) {
-		EmployeeManager frame = new EmployeeManager();
+		EmployeeManagerUI frame = new EmployeeManagerUI();
+		frame.setTitle("사원 관리");
 		frame.setVisible(true);
 	}
 }

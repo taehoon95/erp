@@ -1,9 +1,9 @@
 package erp.ui;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,24 +17,41 @@ import javax.swing.border.EmptyBorder;
 import erp.dto.Employee;
 import erp.dto.Title;
 import erp.service.TitleService;
+import erp.ui.content.AbstractContentPanel;
 import erp.ui.content.TitlePanel;
 import erp.ui.exception.InvaildCheckException;
 import erp.ui.exception.NotSelectedExeption;
 import erp.ui.exception.SqlConstraintException;
+import erp.ui.list.AbstractCustomTablePanel;
 import erp.ui.list.TitleTablePanel;
 
+import java.util.stream.Collectors;
 @SuppressWarnings("serial")
-public class TitleManager extends JFrame implements ActionListener {
+public class TitleManager구버전 extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnAdd;
-	private TitlePanel pContent;
-	private TitleTablePanel pList;
+	
+	private AbstractContentPanel<Title> pContent;
+	private AbstractCustomTablePanel<Title> pList;
+	
 	private TitleService service;
 	
-	public TitleManager() {
-		service = new TitleService();
+	public TitleManager구버전() {
+		setService(); //service 연결
+		
 		initialize();
+		
+		tableLoadData(); // component load Data
+	}
+
+	public void tableLoadData() {
+		((TitleTablePanel)pList).setService(service);
+		pList.loadData();
+	}
+
+	public void setService() {
+		service = new TitleService();
 	}
 	
 	private void initialize() {
@@ -46,7 +63,7 @@ public class TitleManager extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
-		pContent = new TitlePanel();
+		pContent = createContentPanel();
 		contentPane.add(pContent);
 		
 		JPanel pBtns = new JPanel();
@@ -60,13 +77,20 @@ public class TitleManager extends JFrame implements ActionListener {
 		btnClear.addActionListener(this);
 		pBtns.add(btnClear);
 		
-		pList = new TitleTablePanel();
-		pList.setService(service);
-		pList.loadData();
+		pList = createTablePanel();
+		
 		contentPane.add(pList);
 		
 		JPopupMenu popupMenu = createPopupMenu();
 		pList.setPopupMenu(popupMenu);
+	}
+
+	public TitleTablePanel createTablePanel() {
+		return new TitleTablePanel();
+	}
+
+	public TitlePanel createContentPanel() {
+		return new TitlePanel();
 	}
 
 	private JPopupMenu createPopupMenu() {
@@ -102,7 +126,7 @@ public class TitleManager extends JFrame implements ActionListener {
 					Title updateTitle = pList.getItem();
 					pContent.setItem(updateTitle);
 					btnAdd.setText("수정");
-					pContent.getTfTitleNo().setEditable(false);
+					((TitlePanel) pContent).getTfTitleNo().setEditable(false);
 				}
 				
 				if (e.getActionCommand().contentEquals("동일 직책 사원 보기")) {
@@ -173,7 +197,7 @@ public class TitleManager extends JFrame implements ActionListener {
 		pContent.clearTf();
 		btnAdd.setText("추가");
 		JOptionPane.showMessageDialog(null, updateTitle.getTname() + "정보가 수정되었습니다.");
-		pContent.getTfTitleNo().setEditable(true);
+		((TitlePanel) pContent).getTfTitleNo().setEditable(true);
 	}
 
 	protected void actionPerformedBtnAdd(ActionEvent e) {
@@ -184,7 +208,7 @@ public class TitleManager extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(null, title + " 추가했습니다.");
 	}
 	protected void actionPerformedBtnClear(ActionEvent e) {
-		pContent.getTfTitleNo().setEditable(true);
+		((TitlePanel) pContent).getTfTitleNo().setEditable(true);
 		pContent.clearTf();
 	}
 }

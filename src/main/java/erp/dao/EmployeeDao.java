@@ -14,7 +14,7 @@ public interface EmployeeDao {
 	Employee selectEmpByNo(Employee employee);
 	int insertEmployee(Employee employee);
 	int updateEmployee(Employee employee);
-	int deleteEmployee(int empNo);
+	int deleteEmployee(Employee emp);
 	
 	List<Employee> selectEmployeeByTitle(Title title);
 	List<Employee> selectEmpByDeptNo(Department dept);

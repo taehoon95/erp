@@ -19,7 +19,7 @@ import erp.ui.list.EmployeeTablePanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class EmployeeManager extends JFrame implements ActionListener {
+public class EmployeeManager구버전 extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnAdd;
@@ -28,7 +28,7 @@ public class EmployeeManager extends JFrame implements ActionListener {
 	private JButton btnSet;
 	private JButton btnCancel;
 
-	public EmployeeManager() {
+	public EmployeeManager구버전() {
 		initialize();
 	}
 

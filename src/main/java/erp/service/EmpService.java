@@ -32,4 +32,16 @@ public class EmpService {
 	public List<Employee> showEmployeeByDept(Department dept){
 		return EmpDao.selectEmpByDeptNo(dept);
 	}
+	
+	public void removeEmployee(Employee emp) {
+		EmpDao.deleteEmployee(emp);
+	}
+	
+	public void modifiEmployee(Employee emp) {
+		EmpDao.updateEmployee(emp);
+	}
+	
+	public void addEmployee(Employee emp) {
+		EmpDao.insertEmployee(emp);
+	}
 }

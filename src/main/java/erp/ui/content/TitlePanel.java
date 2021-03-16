@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 import erp.dto.Title;
 import erp.ui.exception.InvaildCheckException;
 
-public class TitlePanel extends InterfaceItem<Title>{
+public class TitlePanel extends AbstractContentPanel<Title>{
 	private JTextField tfTitleNo;
 	private JTextField tfTitleName;
 

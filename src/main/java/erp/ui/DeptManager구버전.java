@@ -17,24 +17,24 @@ import javax.swing.border.EmptyBorder;
 import erp.dto.Department;
 import erp.dto.Employee;
 import erp.service.DeptService;
+import erp.ui.content.AbstractContentPanel;
 import erp.ui.content.DeptPanel;
-import erp.ui.content.InterfaceItem;
 import erp.ui.exception.InvaildCheckException;
 import erp.ui.exception.NotSelectedExeption;
 import erp.ui.exception.SqlConstraintException;
 import erp.ui.list.DepartmentTablePanel;
 
-public class DeptManager extends JFrame implements ActionListener {
+public class DeptManager구버전 extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private InterfaceItem<Department> pContent;
+	private AbstractContentPanel<Department> pContent;
 	private JPanel pBtn;
 	private DepartmentTablePanel pList;
 	private JButton btnAdd;
 	private JButton btnCancel;
 	private DeptService service;
 	
-	public DeptManager() {
+	public DeptManager구버전() {
 		service = new DeptService();
 		initialize();
 	}
