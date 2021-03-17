@@ -3,7 +3,9 @@ package erp.ui.list;
 import javax.swing.SwingConstants;
 
 import erp.dto.Department;
+import erp.dto.Title;
 import erp.service.DeptService;
+import erp.ui.exception.NotSelectedExeption;
 
 public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 	public DepartmentTablePanel() {
@@ -40,5 +42,17 @@ public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 
 	public void setService(DeptService service) {
 		this.service = service;
+	}
+
+	@Override
+	public Department getItem() {
+		int row = table.getSelectedRow();
+		int deptNo = (int) table.getValueAt(row, 0);
+		
+		if(row == -1) {
+			throw new NotSelectedExeption();
+		}
+		
+		return list.get(list.indexOf(new Department(deptNo)));
 	}
 }

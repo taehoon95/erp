@@ -31,13 +31,13 @@ public abstract class AbstractCustomTablePanel<T> extends JPanel {
 		setList();
 	}
 
-	public T getItem() { 
+	public abstract T getItem(); /*{ 
 		int idx = table.getSelectedRow();
 		if(idx == -1) {
 			throw new NotSelectedExeption();
 		}
 		return list.get(idx);
-	}
+	}*/
 	
 	public void setPopupMenu(JPopupMenu popMenu) {
 		table.setComponentPopupMenu(popMenu);

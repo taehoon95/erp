@@ -3,8 +3,10 @@ package erp.ui.list;
 import javax.swing.SwingConstants;
 
 import erp.dto.Employee;
+import erp.dto.Title;
 import erp.service.EmpService;
 import erp.service.TitleService;
+import erp.ui.exception.NotSelectedExeption;
 import erp.ui.list.AbstractCustomTablePanel;
 
 public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
@@ -48,5 +50,17 @@ public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 
 	public void setService(EmpService service) {
 		this.service = service;
+	}
+
+	@Override
+	public Employee getItem() {
+		int row = table.getSelectedRow();
+		int empNo = (int) table.getValueAt(row, 0);
+		
+		if(row == -1) {
+			throw new NotSelectedExeption();
+		}
+		
+		return list.get(list.indexOf(new Employee(empNo)));
 	}
 }
