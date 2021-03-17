@@ -12,6 +12,10 @@ import erp.ui.list.AbstractCustomTablePanel;
 import erp.ui.list.EmployeeTablePanel;
 
 public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
+	
+	public EmployeeManagerUI() {
+		empListByTitleItem.setText(AbstractManagerUI.EMP_MENU);
+	}
 
 	private EmpService service;
 
