@@ -85,31 +85,6 @@ public class Employee {
 		this.dept = dept;
 	}
 
-
-	
-	@Override
-	public String toString() {
-//		return String.format("%s %s %s %s %s %s", empNo,
-//				empName, title.getTno(), manager.getEmpNo() == 0 ? null : manager.getEmpNo(), salary, dept.getDeptNo());
-		return String.format("%s",empNo);
-	}
-	
-	public String toString5() {
-		return String.format("%s", empNo);
-	}
-	
-	public String toString3() {
-		return String.format("%s %s %s %s %s %s %s %s"
-				,empNo
-				,empName
-				,title.getTname(),title.getTno()
-				,manager.getEmpName()
-				,manager.getEmpNo()
-				,salary
-				,dept.getDeptName()
-				,dept.getDeptNo());
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -132,6 +107,33 @@ public class Employee {
 			return false;
 		return true;
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+//		return String.format("%s %s %s %s %s %s", empNo,
+//				empName, title.getTno(), manager.getEmpNo() == 0 ? null : manager.getEmpNo(), salary, dept.getDeptNo());
+		return String.format("%s (%d)",empName,empNo);
+	}
+	
+	public String toString5() {
+		return String.format("%s", empNo);
+	}
+	
+	public String toString3() {
+		return String.format("%s %s %s %s %s %s %s %s"
+				,empNo
+				,empName
+				,title.getTname(),title.getTno()
+				,manager.getEmpName()
+				,manager.getEmpNo()
+				,salary
+				,dept.getDeptName()
+				,dept.getDeptNo());
+	}
+	
+
 
 
 	public String toString2() {

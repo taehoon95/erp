@@ -1,21 +1,11 @@
 package erp.dto;
 
-import java.util.List;
-
 public class Department {
 	private int deptNo;
 	private String deptName;
 	private int floor;
 	
-	private List<Employee> empList;
-
-	public List<Employee> getEmpList() {
-		return empList;
-	}
-
-	public void setEmpList(List<Employee> empList) {
-		this.empList = empList;
-	}
+//	private List<Employee> empList;
 
 	public Department() {
 

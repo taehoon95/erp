@@ -3,18 +3,13 @@ package erp.ui.list;
 import javax.swing.SwingConstants;
 
 import erp.dto.Employee;
-import erp.dto.Title;
 import erp.service.EmpService;
-import erp.service.TitleService;
 import erp.ui.exception.NotSelectedExeption;
-import erp.ui.list.AbstractCustomTablePanel;
 
 public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
-	public EmployeeTablePanel() {
-	}
-
+	
 	private EmpService service = new EmpService();
-
+	
 	@Override
 	protected void setAlignAndWidth() {
 		// 컬럼내용 정렬
@@ -45,7 +40,7 @@ public class EmployeeTablePanel extends AbstractCustomTablePanel<Employee> {
 
 	@Override
 	public void initList() {
-		list = service.showEmployee();
+		list = service.showEmployeeAll();
 	}
 
 	public void setService(EmpService service) {

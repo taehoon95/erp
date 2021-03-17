@@ -18,7 +18,7 @@ public class EmployeeManagerUI extends AbstractManagerUI<Employee> {
 	private EmpService service;
 	private EmpDetailService detailService;
 	
-	public EmployeeManagerUI() {
+	public EmployeeManagerUI() { // 팝업메뉴 이름 설정
 		empListByTitleItem.setText(AbstractManagerUI.EMP_MENU);
 	}
 

@@ -41,13 +41,18 @@ import erp.ui.exception.InvaildCheckException;
 public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> implements ActionListener {
 	private JPasswordField tfPass1;
 	private JPasswordField tfPass2;
+	
 	private String imgPath = System.getProperty("user.dir") + File.separator + "images" + File.separator;
+	private JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
+	
 	private JLabel lblPic;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnAddPic;
-	private JFileChooser chooser = new JFileChooser(System.getProperty("user.dir"));
 	private JLabel lblConfirm;
 	private JDateChooser dateHire;
+	private JTextField tfEmpno;
+	private JRadioButton rdbbtnFemale;
+	private JRadioButton rdbbtnMale;
 	
 	public EmployeeDetailPanel() {
 		initialize();
@@ -79,7 +84,7 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pPic.setLayout(new BorderLayout(0, 0));
 
 		lblPic = new JLabel();
-		lblPic.setPreferredSize(new Dimension(100, 120));
+		lblPic.setPreferredSize(new Dimension(100, 150));
 		lblPic.setHorizontalAlignment(SwingConstants.CENTER);
 		pPic.add(lblPic, BorderLayout.CENTER);
 
@@ -95,7 +100,7 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pItem.add(pContent);
 		pContent.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JLabel lblEmpno = new JLabel("\uC0AC\uC6D0 \uBC88\uD638");
+		JLabel lblEmpno = new JLabel("사원 번호");
 		lblEmpno.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblEmpno);
 		
@@ -109,7 +114,6 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pContent.add(lblHireDate);
 		
 		dateHire = new JDateChooser();
-		dateHire.setDate(new Date());
 		pContent.add(dateHire);
 		
 		JLabel lblGender = new JLabel("성별");
@@ -147,20 +151,22 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		JPanel pSpace = new JPanel();
 		pContent.add(pSpace);
 		
-		lblConfirm = new JLabel("불일치");
+		lblConfirm = new JLabel();
 		lblConfirm.setFont(new Font("굴림", Font.BOLD, 20));
 		lblConfirm.setForeground(Color.RED);
 		lblConfirm.setHorizontalAlignment(SwingConstants.CENTER);
 		pContent.add(lblConfirm);
 	}
-
+	
+	public void setTfEmpno(JTextField tfEmpno) {
+		this.tfEmpno = tfEmpno;
+	}
+	
 	public JTextField getTfEmpno() {
 		return tfEmpno;
 	}
 
-	public void setTfEmpno(JTextField tfEmpno) {
-		this.tfEmpno = tfEmpno;
-	}
+
 
 	@Override
 	public void setItem(EmployeeDetail item) {
@@ -178,21 +184,17 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 	}
 	
 	public void setTfEmpno(Employee empNo) {
-		tfEmpno.setText(String.valueOf(empNo));
+		tfEmpno.setText(String.valueOf(empNo.getEmpNo()));
 	}
 
 	@Override
 	public EmployeeDetail getItem() {
 		validCheck();
-		int empNo = Integer.parseInt(tfEmpno.getText());
+		int empNo = Integer.parseInt(tfEmpno.getText().trim());
 		boolean gender = rdbbtnFemale.isSelected()?true:false;
 		Date hireDate = dateHire.getDate();
-//		if(!lblConfirm.getText().equals("일치")) {
-//		throw new InvaildCheckException("패스워드 불일치");
-//		}
 		String pass = String.valueOf(tfPass1.getPassword());
 		byte[] pic = getImage();
-		validCheck();
 		return new EmployeeDetail(empNo, gender, hireDate, pass, pic);
 	}
 
@@ -227,7 +229,13 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 
 	@Override
 	public void clearTf() {
-
+		loadPic(null);
+		dateHire.setDate(new Date());
+		rdbbtnFemale.setSelected(true);
+		tfPass1.setText("");
+		tfPass2.setText("");
+		lblConfirm.setText("");
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -281,8 +289,6 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 			}
 		}
 	};
-	private JTextField tfEmpno;
-	private JRadioButton rdbbtnFemale;
-	private JRadioButton rdbbtnMale;
+	
 
 }

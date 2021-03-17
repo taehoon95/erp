@@ -17,7 +17,7 @@ public class EmpService {
 	private DepartmentDao DeptDao = DepartmentDaoImpl.getInstance();
 	private TitleDao TitleDao = TitleDaoimpl.getInstance();
 	
-	public List<Employee> showEmployee() {
+	public List<Employee> showEmployeeAll(){
 		return EmpDao.selectEmpByAllJoin();
 	}
 	

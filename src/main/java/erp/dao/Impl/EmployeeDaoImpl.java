@@ -25,52 +25,36 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return instance;
 	}
 
-	private EmployeeDaoImpl() {
-	}
-
-	private Employee getEmployee2(ResultSet rs) throws SQLException {
-		int empNo = rs.getInt("empno");
-		String empName = rs.getString("empname");
-		Title title = new Title(rs.getInt("title_no"));
-		Employee manager = new Employee(rs.getInt("manager_no"));
-		int salary = rs.getInt("salary");
-		Department dept = new Department(rs.getInt("deptNo"));
-
-		try {
-			title.setTname(rs.getString("tname"));
-			manager.setEmpName(rs.getString("mgrName"));
-			dept.setDeptName(rs.getString("deptname"));
-			dept.setFloor(rs.getInt("floor"));
-		} catch (SQLException e) {
-		}
-
-		return new Employee(empNo, empName, title, manager, salary, dept);
-	}
+	private EmployeeDaoImpl() {}
 
 	private Employee getEmployee(ResultSet rs) throws SQLException {
 		int empNo = rs.getInt("empno");
 		String empName = rs.getString("empname");
-		Title title = new Title(rs.getInt("title_no"));
-		Employee manager = new Employee(rs.getInt("manager_no"));
-		int salary = rs.getInt("salary");
-		Department dept = new Department(rs.getInt("deptNo"));
+		Title title = null;
+		Employee manager = null;
+		int salary = 0;
+		Department dept = null;
+		
+		try {
+			title = new Title(rs.getInt("title_no"));
+			manager = new Employee(rs.getInt("manager_no"));
+			salary = rs.getInt("salary");
+			dept = new Department(rs.getInt("deptNo"));			
+		}catch(SQLException e) {}
 
 		try {
 			title.setTname(rs.getString("title_name"));
-		} catch (SQLException e) {
-		}
-
+		} catch (SQLException e) {}
 		try {
 			manager.setEmpName(rs.getString("manager_name"));
-		} catch (SQLException e) {
-		}
-
+		} catch (SQLException e) {}
 		try {
 			dept.setDeptName(rs.getString("deptname"));
+		} catch (SQLException e) {}
+		try {
 			dept.setFloor(rs.getInt("floor"));
-		} catch (SQLException e) {
-		}
-
+		} catch (SQLException e) {}
+			
 		return new Employee(empNo, empName, title, manager, salary, dept);
 	}
 
@@ -95,19 +79,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public List<Employee> selectEmpByAll() {
-		String sql = "select empno,empname,title as title_no,manager as manager_no ,salary,dept as deptNo from employee;";
+		String sql = "select empno,empname,title_name,title_no,manager_name,manager_no,salary,deptNo,deptname,floor from vw_full_employee";
 		try (Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if (rs.next()) {
 				List<Employee> list = new ArrayList<>();
 				do {
-					list.add(getEmployee2(rs));
+					list.add(getEmployee(rs));
 				} while (rs.next());
 				return list;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -186,7 +169,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				if (rs.next()) {
 					ArrayList<Employee> list = new ArrayList<Employee>();
 					do {
-						list.add(getEmployee3(rs));
+						list.add(getEmployee(rs));
 					} while (rs.next());
 					return list;
 				}
@@ -207,7 +190,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				if (rs.next()) {
 					ArrayList<Employee> list = new ArrayList<Employee>();
 					do {
-						list.add(getEmployee3(rs));
+						list.add(getEmployee(rs));
 					} while (rs.next());
 					return list;
 				}
@@ -216,12 +199,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private Employee getEmployee3(ResultSet rs) throws SQLException {
-		int empNo = rs.getInt("empno");
-		String empName = rs.getString("empname");
-		return new Employee(empNo, empName);
 	}
 
 }

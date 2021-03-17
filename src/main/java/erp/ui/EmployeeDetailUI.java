@@ -16,6 +16,7 @@ import erp.dto.EmployeeDetail;
 import erp.service.EmpDetailService;
 import erp.ui.content.EmployeeDetailPanel;
 
+@SuppressWarnings("serial")
 public class EmployeeDetailUI extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -33,12 +34,15 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 
 	private void initialize(boolean isBtns) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 486);
+		setBounds(100, 100, 450, 508);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
-
+		
+		pItem = new EmployeeDetailPanel();
+		contentPane.add(pItem, BorderLayout.CENTER);
+		
 		pBtns = new JPanel();
 
 		contentPane.add(pBtns, BorderLayout.SOUTH);
@@ -59,8 +63,7 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 			btnCancel.setText("삭제");
 		}
 
-		pItem = new EmployeeDetailPanel();
-		contentPane.add(pItem, BorderLayout.CENTER);
+	
 	}
 
 	public void setEmpno(Employee empNo) {
@@ -119,7 +122,5 @@ public class EmployeeDetailUI extends JFrame implements ActionListener {
 		pItem.clearTf();
 		JOptionPane.showMessageDialog(null, "삭제 완료");
 	}
-
-	////////////////////////////////////////////////////////////
 
 }

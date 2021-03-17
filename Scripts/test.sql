@@ -29,3 +29,5 @@ delete from emp_detail where empno = 1003;
 
 select * from emp_detail;
 
+select empno,empname,title_name,title_no,manager_name,manager_no,salary,deptNo,deptname,floor from vw_full_employee;
+
