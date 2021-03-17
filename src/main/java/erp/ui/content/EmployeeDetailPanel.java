@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
@@ -28,6 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import erp.dto.Employee;
 import erp.dto.EmployeeDetail;
 import erp.ui.exception.InvaildCheckException;
 
@@ -88,6 +95,15 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pItem.add(pContent);
 		pContent.setLayout(new GridLayout(0, 2, 0, 0));
 		
+		JLabel lblEmpno = new JLabel("\uC0AC\uC6D0 \uBC88\uD638");
+		lblEmpno.setHorizontalAlignment(SwingConstants.RIGHT);
+		pContent.add(lblEmpno);
+		
+		tfEmpno = new JTextField();
+		tfEmpno.setEditable(false);
+		pContent.add(tfEmpno);
+		tfEmpno.setColumns(10);
+		
 		JLabel lblHireDate = new JLabel("입사일");
 		lblHireDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblHireDate);
@@ -103,12 +119,12 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		JPanel pGender = new JPanel();
 		pContent.add(pGender);
 		
-		JRadioButton rdbbtnFemale = new JRadioButton("여");
+		rdbbtnFemale = new JRadioButton("여");
 		rdbbtnFemale.setSelected(true);
 		buttonGroup.add(rdbbtnFemale);
 		pGender.add(rdbbtnFemale);
 		
-		JRadioButton rdbbtnMale = new JRadioButton("남");
+		rdbbtnMale = new JRadioButton("남");
 		buttonGroup.add(rdbbtnMale);
 		pGender.add(rdbbtnMale);
 		
@@ -138,20 +154,74 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pContent.add(lblConfirm);
 	}
 
+	public JTextField getTfEmpno() {
+		return tfEmpno;
+	}
+
+	public void setTfEmpno(JTextField tfEmpno) {
+		this.tfEmpno = tfEmpno;
+	}
+
 	@Override
 	public void setItem(EmployeeDetail item) {
-
+		
+		tfEmpno.setText(String.valueOf(item.getEmpNO()));
+		byte[] iconBytes = item.getPic();
+		ImageIcon icon = new ImageIcon(iconBytes);
+		lblPic.setIcon(icon);
+		dateHire.setDate(item.getHireDate());
+		if(item.isGender()) {
+			rdbbtnFemale.setSelected(true);
+		}else {
+			rdbbtnMale.setSelected(true);
+		}
+	}
+	
+	public void setTfEmpno(Employee empNo) {
+		tfEmpno.setText(String.valueOf(empNo));
 	}
 
 	@Override
 	public EmployeeDetail getItem() {
+		validCheck();
+		int empNo = Integer.parseInt(tfEmpno.getText());
+		boolean gender = rdbbtnFemale.isSelected()?true:false;
+		Date hireDate = dateHire.getDate();
+//		if(!lblConfirm.getText().equals("일치")) {
+//		throw new InvaildCheckException("패스워드 불일치");
+//		}
+		String pass = String.valueOf(tfPass1.getPassword());
+		byte[] pic = getImage();
+		validCheck();
+		return new EmployeeDetail(empNo, gender, hireDate, pass, pic);
+	}
+
+	private byte[] getImage() {
+		
+		try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+			ImageIcon icon = (ImageIcon) lblPic.getIcon();
+			BufferedImage bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+			
+			//icon => image
+			Graphics2D g2 = bi.createGraphics();
+			g2.drawImage(icon.getImage(), 0, 0, null);
+			g2.dispose();
+			
+			ImageIO.write(bi, "png", baos);
+
+			return baos.toByteArray();
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public void validCheck() {
-		if(!lblConfirm.equals("일치")) {
-			throw new InvaildCheckException();
+		if(lblConfirm.getText().equals("불일치")) {
+			throw new InvaildCheckException("비밀번호 불일치");
 		}
 	}
 
@@ -211,5 +281,8 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 			}
 		}
 	};
+	private JTextField tfEmpno;
+	private JRadioButton rdbbtnFemale;
+	private JRadioButton rdbbtnMale;
 
 }

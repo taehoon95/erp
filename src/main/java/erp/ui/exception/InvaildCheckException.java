@@ -10,4 +10,10 @@ public class InvaildCheckException extends RuntimeException { //추가버튼 누
 	public InvaildCheckException(Throwable cause) {
 		super("공백이 존재합니다.", cause);
 	}
+
+	public InvaildCheckException(String message) {
+		super(message);
+	}
+	
+	
 }

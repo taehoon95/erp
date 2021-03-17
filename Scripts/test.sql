@@ -23,5 +23,9 @@ INSERT INTO erp.emp_detail (empno, pass, pic, gender, hiredate) VALUES(?, ?, ?, 
 
 select empno,pic,gender,hiredate,pass from emp_detail where empno = 1003;
 
+update emp_detail set pic = ? ,gender = ?, hiredate = ?, pass = password(?) where empno = ?;
+
 delete from emp_detail where empno = 1003;
+
+select * from emp_detail;
 

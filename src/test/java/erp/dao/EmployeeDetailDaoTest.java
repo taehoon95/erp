@@ -7,7 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -16,8 +18,10 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import erp.dao.Impl.EmployeeDetailDaoImpl;
+import erp.dto.Department;
 import erp.dto.Employee;
 import erp.dto.EmployeeDetail;
+import erp.dto.Title;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EmployeeDetailDaoTest {
@@ -32,7 +36,7 @@ public class EmployeeDetailDaoTest {
 	@Test
 	public void test02SelectEmployeeDetailByNo() {
 		System.out.println("test02SelectEmployeeDetailByNo()");
-		EmployeeDetail employeeDetail = dao.selectEmployeeDetailByNo(new EmployeeDetail(1003));
+		EmployeeDetail employeeDetail = dao.selectEmployeeDetailByNo(new Employee(1003));
 		Assert.assertNotNull(employeeDetail);
 		System.out.println(employeeDetail);
 	}
@@ -40,6 +44,10 @@ public class EmployeeDetailDaoTest {
 	@Test
 	public void test01InsertEmployeeDetail() {
 		System.out.println("test01InsertEmployeeDetail");
+		
+		Calendar cal = GregorianCalendar.getInstance();
+		
+		
 		EmployeeDetail detail = new EmployeeDetail(1003, true, new Date(),"1234", getImage("noimage.jpg") );
 		int res = dao.insertEmployeeDetail(detail);
 		Assert.assertEquals(1, res);
@@ -61,10 +69,13 @@ public class EmployeeDetailDaoTest {
 
 	@Test
 	public void test03UpdateEmployeeDetail() {
-		fail("Not yet implemented");
+		System.out.println("test03UpdateEmployeeDetail");
+		EmployeeDetail newEmpDetail = new EmployeeDetail(1003, false, new Date(), "1111", getImage("dog3.jpg"));
+		int res = dao.updateEmployeeDetail(newEmpDetail);
+		Assert.assertEquals(1, res);
 	}
 
-	@Test
+//	@Test
 	public void test04DeleteEmployeeDetail() {
 		System.out.println("test04DeleteEmployeeDetail()");
 		int res = dao.deleteEmployeeDetail(new Employee(1003));

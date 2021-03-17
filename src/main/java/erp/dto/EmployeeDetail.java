@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class EmployeeDetail {
-	private int empNO;
+	private int empNo;
 	private boolean gender;
 	private Date hireDate;
 	private byte[] pic;
@@ -14,11 +14,11 @@ public class EmployeeDetail {
 	}
 
 	public EmployeeDetail(int empNO) {
-		this.empNO = empNO;
+		this.empNo = empNO;
 	}
 
 	public EmployeeDetail(int empNO, boolean gender, Date hireDate, byte[] pic) {
-		this.empNO = empNO;
+		this.empNo = empNO;
 		this.gender = gender;
 		this.hireDate = hireDate;
 		this.pic = pic;
@@ -26,8 +26,8 @@ public class EmployeeDetail {
 	
 	
 
-	public EmployeeDetail(int empNO, boolean gender, Date hireDate,  String pass,byte[] pic) {
-		this.empNO = empNO;
+	public EmployeeDetail(int empNO, boolean gender, Date hireDate,  String pass, byte[] pic) {
+		this.empNo = empNO;
 		this.gender = gender;
 		this.hireDate = hireDate;
 		this.pic = pic;
@@ -35,11 +35,11 @@ public class EmployeeDetail {
 	}
 
 	public int getEmpNO() {
-		return empNO;
+		return empNo;
 	}
 
 	public void setEmpNO(int empNO) {
-		this.empNO = empNO;
+		this.empNo = empNO;
 	}
 
 	public boolean isGender() {
@@ -76,7 +76,7 @@ public class EmployeeDetail {
 
 	@Override
 	public String toString() {
-		return String.format("empNO=%s, gender=%s, hireDate=%s, pic=%s", empNO, gender, hireDate,
+		return String.format("empNO=%s, gender=%s, hireDate=%s, pic=%s", empNo, gender, hireDate,
 				pic.length);
 	}
 
