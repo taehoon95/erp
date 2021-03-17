@@ -91,7 +91,11 @@ public class Employee {
 	public String toString() {
 //		return String.format("%s %s %s %s %s %s", empNo,
 //				empName, title.getTno(), manager.getEmpNo() == 0 ? null : manager.getEmpNo(), salary, dept.getDeptNo());
-		return String.format("%s (%s)",empName,empNo);
+		return String.format("%s",empNo);
+	}
+	
+	public String toString5() {
+		return String.format("%s", empNo);
 	}
 	
 	public String toString3() {
